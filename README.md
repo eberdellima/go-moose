@@ -12,7 +12,7 @@ As for the ORM, I used [gorm](https://gorm.io/) on a MySQL database. It's a real
 
 or just go for the quicker way
 
-- `makerun`
+- `make run`
 
 ## Tests
 

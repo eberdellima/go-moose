@@ -35,7 +35,7 @@ compile:
 	# Windows
 	GOOS=windows GOARCH=386 go build -o bin/go-moose-windows-386 .
 
-  # 64-Bit
+	# 64-Bit
 	# FreeBDS
 	GOOS=freebsd GOARCH=amd64 go build -o bin/go-moose-freebsd-amd64 .
 	# MacOS
