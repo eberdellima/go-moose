@@ -7,7 +7,11 @@ import (
 )
 
 // ConfigureAPI configure all available routes of the API
-func ConfigureAPI(router *gin.Engine) {
+func ConfigureAPI() *gin.Engine {
+
+	router := gin.Default()
 
 	AuthorizationModule.ConfigureRoutes(router)
+
+	return router
 }

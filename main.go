@@ -11,7 +11,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -25,8 +24,7 @@ func main() {
 	db := database.InitializeDBConnection()
 	defer db.Close()
 
-	router := gin.Default()
-	src.ConfigureAPI(router)
+	router := src.ConfigureAPI()
 
 	server := &http.Server{
 		Addr:           "localhost:" + os.Getenv("PORT"),
