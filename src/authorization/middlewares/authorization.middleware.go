@@ -23,7 +23,7 @@ func CheckUserCredentials() gin.HandlerFunc {
 
 		database.DB.Where(&models.User{Email: assertedPayload.Email}).First(&user)
 
-		if user.ID == 0 || user.DeletedAt != nil {
+		if user.ID == 0 {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Email or password incorrect"})
 			return
 		}
@@ -51,7 +51,7 @@ func IsUserRegistered() gin.HandlerFunc {
 
 		database.DB.Where(models.User{Email: assertedPayload.Email}).Or(models.User{Username: assertedPayload.Username}).First(&user)
 
-		if user.ID != 0 || user.DeletedAt != nil {
+		if user.ID != 0 {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "User already exists"})
 			return
 		}
@@ -84,13 +84,14 @@ func CheckJWT() gin.HandlerFunc {
 
 		var userToken models.UserToken
 
-		database.DB.Where(models.UserToken{UserID: userID, AccessToken: token}).First(&userToken)
+		database.DB.Where(models.UserToken{UserID: userID, AccessToken: token}).Preload("User").First(&userToken)
 
-		if userToken.ID == 0 || userToken.DeletedAt != nil {
+		if userToken.ID == 0 {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Not authenticated"})
 			return
 		}
 
+		ctx.Set("user_token", userToken)
 		ctx.Next()
 	}
 }
@@ -108,7 +109,7 @@ func CheckTokenExists() gin.HandlerFunc {
 
 		database.DB.Where(models.UserToken{RefreshToken: assertedPayload.RefreshToken, UserID: assertedPayload.UserID}).First(&userToken)
 
-		if userToken.ID == 0 || userToken.DeletedAt != nil {
+		if userToken.ID == 0 {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Not authenticated"})
 			return
 		}
