@@ -44,23 +44,6 @@ func CreateAccessToken(user models.User) string {
 	return signedToken
 }
 
-// ValidateAccessToken validates if access token is correct
-func ValidateAccessToken(token string) (*jwt.Token, error) {
-
-	parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-
-		err := godotenv.Load()
-		if err != nil {
-			panic(err)
-		}
-
-		key := []byte(os.Getenv("APP_SECRET"))
-		return key, nil
-	})
-
-	return parsedToken, err
-}
-
 // CreateRefreshToken create new refresh token for user
 func CreateRefreshToken() string {
 
@@ -100,20 +83,4 @@ func CreateTokenPair(user models.User) utils.TokenPair {
 	addTokenPair(user, tokenPair)
 
 	return tokenPair
-}
-
-// UpdateTokenPair update the token pairs for a user
-func UpdateTokenPair(user models.User, tokenPair utils.TokenPair) {
-
-	var userToken models.UserToken
-
-	database.DB.Where(&models.UserToken{UserID: user.ID, RefreshToken: tokenPair.RefreshToken}).First(&userToken)
-
-	if (&userToken) == nil {
-		panic("Token pair not exists for provided user with id: " + string(user.ID))
-	}
-
-	userToken.AccessToken = CreateAccessToken(user)
-
-	database.DB.Save(&userToken)
 }

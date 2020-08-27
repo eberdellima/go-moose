@@ -1,8 +1,7 @@
 package controllers
 
 import (
-	"go-moose/database"
-	"go-moose/database/models"
+	"go-moose/src/authorization/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -15,9 +14,7 @@ func Logout(ctx *gin.Context) {
 	token := ctx.GetHeader("Authorization")
 	token = string(token[7:])
 
-	userToken := models.UserToken{AccessToken: token}
-
-	database.DB.Delete(&userToken)
+	services.Logout(token)
 
 	ctx.JSON(http.StatusNoContent, nil)
 }

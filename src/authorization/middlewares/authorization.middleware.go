@@ -6,9 +6,7 @@ import (
 	"go-moose/src/authorization/inputs"
 	"go-moose/src/authorization/services"
 	"net/http"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -69,26 +67,10 @@ func CheckJWT() gin.HandlerFunc {
 		token := ctx.GetHeader("Authorization")
 		token = string(token[7:])
 
-		// Parse token correctly
-		parsedToken, err := services.ValidateAccessToken(token)
+		// Validate token
+		claims, err := services.ValidateAccessToken(token)
 		if err != nil {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Not authorized"})
-			return
-		}
-
-		// Assert token claims
-		claims, ok := parsedToken.Claims.(jwt.MapClaims)
-		if !ok || !parsedToken.Valid {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Not authorized"})
-			return
-		}
-
-		// Check for expiration
-		exp := string(claims["exp"].(string))
-		expTime, err := time.Parse(time.RFC3339, exp)
-
-		if expTime.Before(time.Now()) {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Not authorized"})
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 			return
 		}
 
