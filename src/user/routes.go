@@ -26,4 +26,16 @@ func ConfigureRoutes(router *gin.Engine) {
 		AuthorizationMiddlewares.CheckJWT(),
 		controllers.DeleteUser,
 	)
+
+	router.GET("/me/uploads",
+		AuthorizationMiddlewares.CheckJWT(),
+		validators.ValidateRequestPagination(),
+		controllers.GetUploadedImages,
+	)
+
+	router.GET("/me/bookmarks",
+		AuthorizationMiddlewares.CheckJWT(),
+		validators.ValidateRequestPagination(),
+		controllers.GetBookmarkedImages,
+	)
 }

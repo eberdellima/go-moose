@@ -31,8 +31,5 @@ func RefreshToken(ctx *gin.Context) {
 
 	services.UpdateTokenPair(assertedUserToken.User, tokenPair)
 
-	ctx.JSON(http.StatusOK, map[string]string{
-		"access_token":  accessToken,
-		"refresh_token": assertedUserToken.RefreshToken,
-	})
+	ctx.JSON(http.StatusOK, tokenPair)
 }

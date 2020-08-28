@@ -19,18 +19,11 @@ func GetProfile(ctx *gin.Context) {
 	userToken, _ := ctx.Get("user_token")
 	assertedUserToken := userToken.(models.UserToken)
 
-	userInfo := utils.ProfileInfo{
+	ctx.JSON(http.StatusOK, utils.ProfileInfo{
 		ID:        assertedUserToken.User.ID,
 		Username:  assertedUserToken.User.Username,
 		Email:     assertedUserToken.User.Email,
 		CreatedAt: assertedUserToken.User.CreatedAt,
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"id":         userInfo.ID,
-		"username":   userInfo.Username,
-		"email":      userInfo.Email,
-		"created_at": userInfo.CreatedAt,
 	})
 }
 

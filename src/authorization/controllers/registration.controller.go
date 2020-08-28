@@ -30,9 +30,5 @@ func Register(ctx *gin.Context) {
 
 	database.DB.Create(&user)
 
-	tokenPair := services.CreateTokenPair(user)
-	ctx.JSON(http.StatusOK, gin.H{
-		"access_token":  tokenPair.AccessToken,
-		"refresh_token": tokenPair.RefreshToken,
-	})
+	ctx.JSON(http.StatusOK, services.CreateTokenPair(user))
 }

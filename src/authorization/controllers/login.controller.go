@@ -15,9 +15,5 @@ func Login(ctx *gin.Context) {
 	user, _ := ctx.Get("user")
 	assertedUser, _ := user.(models.User)
 
-	tokenPair := services.CreateTokenPair(assertedUser)
-	ctx.JSON(http.StatusOK, gin.H{
-		"access_token":  tokenPair.AccessToken,
-		"refresh_token": tokenPair.RefreshToken,
-	})
+	ctx.JSON(http.StatusOK, services.CreateTokenPair(assertedUser))
 }
