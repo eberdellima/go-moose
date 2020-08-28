@@ -3,6 +3,7 @@ package user
 import (
 	AuthorizationMiddlewares "go-moose/src/authorization/middlewares"
 	"go-moose/src/user/controllers"
+	"go-moose/src/user/middlewares"
 	"go-moose/src/user/validators"
 
 	"github.com/gin-gonic/gin"
@@ -31,6 +32,12 @@ func ConfigureRoutes(router *gin.Engine) {
 		AuthorizationMiddlewares.CheckJWT(),
 		validators.ValidateRequestPagination(),
 		controllers.GetUploadedImages,
+	)
+
+	router.DELETE("/me/uploads/:id",
+		AuthorizationMiddlewares.CheckJWT(),
+		middlewares.CheckUploadedImageExists(),
+		controllers.RemoveUploadedImage,
 	)
 
 	router.GET("/me/bookmarks",

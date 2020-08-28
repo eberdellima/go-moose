@@ -1,10 +1,14 @@
 package controllers
 
 import (
+	"go-moose/database"
 	"go-moose/database/models"
 	"go-moose/src/user/inputs"
 	"go-moose/src/user/services"
 	"net/http"
+	"strconv"
+
+	"github.com/jinzhu/gorm"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,6 +26,17 @@ func GetUploadedImages(ctx *gin.Context) {
 	assertedPaginator := paginator.(inputs.Paginator)
 
 	ctx.JSON(http.StatusOK, services.GetUploadedImages(&user, &assertedPaginator))
+}
+
+// RemoveUploadedImage deletes an image
+// that was uploaded by the current user
+func RemoveUploadedImage(ctx *gin.Context) {
+
+	imageID, _ := strconv.Atoi(ctx.Param("id"))
+
+	database.DB.Delete(&models.Image{Model: gorm.Model{ID: uint(imageID)}})
+
+	ctx.JSON(http.StatusNoContent, nil)
 }
 
 // GetBookmarkedImages returns paginated list of
