@@ -2,6 +2,7 @@ package src
 
 import (
 	AuthorizationModule "go-moose/src/authorization"
+	FeedModule "go-moose/src/feed"
 	UserModule "go-moose/src/user"
 	"os"
 	"strconv"
@@ -40,4 +41,6 @@ func configureRoutes(router *gin.Engine) {
 	AuthorizationModule.ConfigureRoutes(router)
 
 	UserModule.ConfigureRoutes(router)
+
+	FeedModule.ConfigureRoutes(router)
 }
