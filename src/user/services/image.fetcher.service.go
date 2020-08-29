@@ -59,6 +59,8 @@ func mapImagesToUrls(images []models.Image, user *models.User) []utils.ImageInfo
 
 	for _, image := range images {
 
+		// TODO: Add tags to ImageInfo struct
+
 		imageInfos = append(imageInfos, utils.ImageInfo{
 			ID:         image.ID,
 			Name:       image.Name,
