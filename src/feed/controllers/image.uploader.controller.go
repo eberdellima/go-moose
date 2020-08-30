@@ -27,7 +27,7 @@ func UploadImage(ctx *gin.Context) {
 
 	if err := ctx.SaveUploadedFile(file, fullpath); err != nil {
 
-		services.RemoveUploadedImageOnSacingError(imageID)
+		services.RemoveUploadedImageOnScaningError(imageID)
 
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

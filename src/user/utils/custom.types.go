@@ -33,9 +33,10 @@ type PaginatedImageResults struct {
 // ImageInfo structure representing client related
 // data for an image
 type ImageInfo struct {
-	ID         uint   `json:"id"`
-	URL        string `json:"url"`
-	Name       string `json:"name"`
-	UploadedBy string `json:"uploaded_by"`
-	UploadedAt string `json:"uploaded_at"`
+	ID         uint     `json:"id"`
+	URL        string   `json:"url"`
+	Name       string   `json:"name"`
+	UploadedBy string   `json:"uploaded_by"`
+	UploadedAt string   `json:"uploaded_at"`
+	Tags       []string `json:"tags"`
 }

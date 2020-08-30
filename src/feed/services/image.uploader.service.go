@@ -32,7 +32,7 @@ func UploadImage(filename string, user *models.User) (uint, string) {
 		OriginalName: filename,
 		Name:         filepath.Base(uploadPath),
 		User:         *user,
-		Tags:         string(marshalledTags),
+		Tags:         marshalledTags,
 		UploadPath:   uploadPath,
 	}
 
@@ -41,10 +41,10 @@ func UploadImage(filename string, user *models.User) (uint, string) {
 	return image.ID, uploadPath
 }
 
-// RemoveUploadedImageOnSacingError should be called only when
+// RemoveUploadedImageOnScaningError should be called only when
 // image was stored successfully on db but an error didn't allow it to be stored
 // in the filesystem as well
-func RemoveUploadedImageOnSacingError(imageID uint) {
+func RemoveUploadedImageOnScaningError(imageID uint) {
 
 	database.DB.Delete(&models.Image{Model: gorm.Model{ID: imageID}})
 }

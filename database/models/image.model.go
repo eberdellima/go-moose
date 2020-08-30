@@ -9,7 +9,7 @@ type Image struct {
 	gorm.Model
 	OriginalName string `gorm:"type:varchar(121); not null"`
 	Name         string `gorm:"type:varchar(121); not null"`
-	Tags         string `gorm:"type:json"`
+	Tags         []byte `gorm:"type:json"`
 	UserID       uint
 	User         User    `gorm:"foreignkey:UserID"`
 	BookmarkedBy []*User `gorm:"many2many:bookmarked_images"`

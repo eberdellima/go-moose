@@ -16,7 +16,7 @@ func UpdateImageTags(image *models.Image, imageTags *inputs.ImageTags) {
 		panic(err)
 	}
 
-	image.Tags = string(marshaledImageTags)
+	image.Tags = marshaledImageTags
 
 	database.DB.Save(image)
 }
