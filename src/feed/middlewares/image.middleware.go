@@ -38,14 +38,44 @@ func CheckImageExists() gin.HandlerFunc {
 	}
 }
 
+// IsAlreadyBookmarkedByUser checks whether the user
+// has already bookmarked the image
+func IsAlreadyBookmarkedByUser() gin.HandlerFunc {
+
+	return func(ctx *gin.Context) {
+
+		image, _ := ctx.Get("image")
+		assertedImage := image.(models.Image)
+
+		userToken, _ := ctx.Get("user_token")
+		assertedUserToken := userToken.(models.UserToken)
+
+		user := assertedUserToken.User
+
+		database.DB.Preload("BookmarkedImages").First(&user)
+
+		isBookmarked := false
+		for _, image := range user.BookmarkedImages {
+
+			if image.ID == assertedImage.ID {
+				isBookmarked = true
+				break
+			}
+		}
+
+		ctx.Set("is_bookmarked", isBookmarked)
+		ctx.Next()
+	}
+}
+
 // IsUploadedByCurrentUser checks whether the respective
 // image has been uploaded by the current user
 func IsUploadedByCurrentUser() gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
 
-		user, _ := ctx.Get("user_token")
-		assertedUserToken := user.(models.UserToken)
+		userToken, _ := ctx.Get("user_token")
+		assertedUserToken := userToken.(models.UserToken)
 
 		image, _ := ctx.Get("image")
 		assertedImage := image.(models.Image)

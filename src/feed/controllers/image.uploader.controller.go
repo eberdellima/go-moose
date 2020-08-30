@@ -33,5 +33,5 @@ func UploadImage(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"image_id": imageID})
+	ctx.JSON(http.StatusCreated, gin.H{"image_id": imageID})
 }

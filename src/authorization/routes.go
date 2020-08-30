@@ -28,7 +28,7 @@ func ConfigureRoutes(router *gin.Engine) {
 		controllers.Register,
 	)
 
-	router.POST("/refresh-token",
+	router.PATCH("/refresh-token",
 		validators.ValidateRefreshTokenInput(),
 		middlewares.CheckTokenExists(),
 		controllers.RefreshToken,

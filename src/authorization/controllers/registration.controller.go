@@ -30,5 +30,5 @@ func Register(ctx *gin.Context) {
 
 	database.DB.Create(&user)
 
-	ctx.JSON(http.StatusOK, services.CreateTokenPair(user))
+	ctx.JSON(http.StatusCreated, services.CreateTokenPair(user))
 }
