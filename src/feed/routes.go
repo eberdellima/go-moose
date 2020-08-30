@@ -5,6 +5,7 @@ import (
 	"go-moose/src/feed/controllers"
 	"go-moose/src/feed/middlewares"
 	"go-moose/src/feed/validators"
+	UserValidators "go-moose/src/user/validators"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,8 +34,12 @@ func ConfigureRoutes(router *gin.Engine) {
 		controllers.DownloadImage,
 	)
 
-	// TODO: Add route to get list of images
-	// router.GET("/images")
+	router.GET("/images",
+		AuthorizationMiddlewares.CheckJWT(),
+		UserValidators.ValidateRequestPagination(),
+		middlewares.CheckImageListQueryingParams(),
+		controllers.ListImages,
+	)
 
 	router.POST("/images",
 		AuthorizationMiddlewares.CheckJWT(),

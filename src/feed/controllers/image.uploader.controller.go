@@ -20,8 +20,8 @@ func UploadImage(ctx *gin.Context) {
 
 	filename := filepath.Base(file.Filename)
 
-	user, _ := ctx.Get("user_token")
-	assertedUserToken := user.(models.UserToken)
+	userToken, _ := ctx.Get("user_token")
+	assertedUserToken := userToken.(models.UserToken)
 
 	imageID, fullpath := services.UploadImage(filename, &assertedUserToken.User)
 

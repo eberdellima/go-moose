@@ -19,7 +19,7 @@ func GetUploadedImages(user *models.User, paginator *inputs.Paginator) *utils.Pa
 
 	var images []*models.Image
 
-	database.DB.Where(models.Image{User: *user}).Offset(paginator.From - 1).Limit(paginator.Size).Find(&images)
+	database.DB.Preload("User").Where(models.Image{User: *user}).Offset(paginator.From - 1).Limit(paginator.Size).Find(&images)
 
 	return &utils.PaginatedImageResults{
 		PaginationResult: utils.PaginationResult{
@@ -27,7 +27,7 @@ func GetUploadedImages(user *models.User, paginator *inputs.Paginator) *utils.Pa
 			From:         paginator.From,
 			Size:         paginator.Size,
 		},
-		Results: mapImagesToUrls(images, user),
+		Results: MapImagesToUrls(images),
 	}
 }
 
@@ -37,19 +37,19 @@ func GetBookmarkedImages(user *models.User, paginator *inputs.Paginator) *utils.
 
 	totalResults := database.DB.Model(user).Association("BookmarkedImages").Count()
 
-	database.DB.Preload("BookmarkedImages").Offset(paginator.From - 1).Limit(paginator.Size).First(user)
+	database.DB.Preload("BookmarkedImages").Preload("BookmarkedImages.User").Offset(paginator.From - 1).Limit(paginator.Size).First(user)
 	return &utils.PaginatedImageResults{
 		PaginationResult: utils.PaginationResult{
 			TotalResults: uint(totalResults),
 			From:         paginator.From,
 			Size:         paginator.Size,
 		},
-		Results: mapImagesToUrls(user.BookmarkedImages, user),
+		Results: MapImagesToUrls(user.BookmarkedImages),
 	}
 }
 
-// mapImagesToUrls returns list of url for each of the images provided
-func mapImagesToUrls(images []*models.Image, user *models.User) []utils.ImageInfo {
+// MapImagesToUrls returns list of url for each of the images provided
+func MapImagesToUrls(images []*models.Image) []utils.ImageInfo {
 
 	imageInfos := []utils.ImageInfo{}
 
@@ -62,7 +62,7 @@ func mapImagesToUrls(images []*models.Image, user *models.User) []utils.ImageInf
 		imageInfos = append(imageInfos, utils.ImageInfo{
 			ID:         image.ID,
 			Name:       image.Name,
-			UploadedBy: user.Username,
+			UploadedBy: image.User.Username,
 			UploadedAt: image.CreatedAt.Format(time.RFC3339),
 			URL:        GenerateImageURL(image),
 			Tags:       tags,
