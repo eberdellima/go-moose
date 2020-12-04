@@ -16,8 +16,7 @@ import (
 
 func main() {
 
-	err := godotenv.Load()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		panic("Error loading env file content")
 	}
 
@@ -61,5 +60,4 @@ func main() {
 	}
 
 	log.Println("Server exiting")
-
 }

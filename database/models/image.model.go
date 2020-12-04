@@ -13,7 +13,7 @@ type Image struct {
 	UserID       uint
 	User         User    `gorm:"foreignkey:UserID"`
 	BookmarkedBy []*User `gorm:"many2many:bookmarked_images"`
-	UploadPath   string  `gorm:"type:mediumtext; unique; not null"`
+	UploadPath   string  `gorm:"type:mediumtext; not null"`
 }
 
 // TableName Set Image's table name to be `images`
