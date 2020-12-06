@@ -8,24 +8,17 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 // ConfigureAPI configure all available routes of the API
 func ConfigureAPI() *gin.Engine {
-
-	router := gin.Default()
-
-	err := godotenv.Load()
-	if err != nil {
-		panic("Error loading env file content")
-	}
 
 	maxMultipartMemoryMB, err := strconv.Atoi(os.Getenv("MAX_MULTIPART_MEMORY_MB"))
 	if err != nil {
 		panic(err)
 	}
 
+	router := gin.Default()
 	router.MaxMultipartMemory = int64(maxMultipartMemoryMB)
 	router.Static(os.Getenv("IMAGE_SERVE_ROUTE"), os.Getenv("UPLOAD_DIR"))
 

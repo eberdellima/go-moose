@@ -16,12 +16,10 @@ func GetUploadedImages(ctx *gin.Context) {
 	userToken, _ := ctx.Get("user_token")
 	assertedUserToken := userToken.(models.UserToken)
 
-	user := assertedUserToken.User
-
 	paginator, _ := ctx.Get("paginator")
 	assertedPaginator := paginator.(inputs.Paginator)
 
-	ctx.JSON(http.StatusOK, services.GetUploadedImages(&user, &assertedPaginator))
+	ctx.JSON(http.StatusOK, services.GetUploadedImages(&assertedUserToken.User, &assertedPaginator))
 }
 
 // GetBookmarkedImages returns paginated list of
@@ -31,10 +29,8 @@ func GetBookmarkedImages(ctx *gin.Context) {
 	userToken, _ := ctx.Get("user_token")
 	assertedUserToken := userToken.(models.UserToken)
 
-	user := assertedUserToken.User
-
 	paginator, _ := ctx.Get("paginator")
 	assertedPaginator := paginator.(inputs.Paginator)
 
-	ctx.JSON(http.StatusOK, services.GetBookmarkedImages(&user, &assertedPaginator))
+	ctx.JSON(http.StatusOK, services.GetBookmarkedImages(&assertedUserToken.User, &assertedPaginator))
 }

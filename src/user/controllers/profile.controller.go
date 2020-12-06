@@ -13,17 +13,19 @@ import (
 )
 
 // GetProfile returns basic user related info
-// abidding to ProfileInfo struct
+// abiding to ProfileInfo struct
 func GetProfile(ctx *gin.Context) {
 
 	userToken, _ := ctx.Get("user_token")
 	assertedUserToken := userToken.(models.UserToken)
 
+	user := assertedUserToken.User
+
 	ctx.JSON(http.StatusOK, utils.ProfileInfo{
-		ID:        assertedUserToken.User.ID,
-		Username:  assertedUserToken.User.Username,
-		Email:     assertedUserToken.User.Email,
-		CreatedAt: assertedUserToken.User.CreatedAt,
+		ID:        user.ID,
+		Username:  user.Username,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt,
 	})
 }
 
@@ -34,18 +36,16 @@ func UpdateProfile(ctx *gin.Context) {
 	userToken, _ := ctx.Get("user_token")
 	assertedUserToken := userToken.(models.UserToken)
 
-	user := &assertedUserToken.User
-
 	payload, _ := ctx.Get("payload")
 	assertedPayload, _ := payload.(inputs.ProfileInput)
 
-	err := services.UpdateUserProfile(user, assertedPayload)
+	err := services.UpdateUserProfile(&assertedUserToken.User, assertedPayload)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	tokenPair := AuthorizationServices.CreateTokenPair(*user)
+	tokenPair := AuthorizationServices.CreateTokenPair(assertedUserToken.User)
 	ctx.JSON(http.StatusOK, gin.H{
 		"access_token":  tokenPair.AccessToken,
 		"refresh_token": tokenPair.RefreshToken,

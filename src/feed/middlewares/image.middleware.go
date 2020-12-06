@@ -29,7 +29,7 @@ func CheckImageExists() gin.HandlerFunc {
 		database.DB.Preload("User").Where(models.Image{Model: gorm.Model{ID: uint(imageID)}}).First(&image)
 
 		if image.ID == 0 {
-			ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": http.StatusText(http.StatusNotFound)})
 			return
 		}
 

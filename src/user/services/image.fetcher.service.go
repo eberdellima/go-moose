@@ -6,6 +6,7 @@ import (
 	"go-moose/database/models"
 	"go-moose/src/user/inputs"
 	"go-moose/src/user/utils"
+	"log"
 	"time"
 )
 
@@ -51,13 +52,15 @@ func GetBookmarkedImages(user *models.User, paginator *inputs.Paginator) *utils.
 // MapImagesToUrls returns list of url for each of the images provided
 func MapImagesToUrls(images []*models.Image) []utils.ImageInfo {
 
-	imageInfos := []utils.ImageInfo{}
+	var imageInfos []utils.ImageInfo
 
 	for _, image := range images {
 
 		var tags []string
 
-		json.Unmarshal(image.Tags, &tags)
+		if err := json.Unmarshal(image.Tags, &tags); err != nil {
+			log.Fatal(err)
+		}
 
 		imageInfos = append(imageInfos, utils.ImageInfo{
 			ID:         image.ID,

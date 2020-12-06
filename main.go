@@ -10,36 +10,22 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/joho/godotenv"
 )
 
 func main() {
 
-	if err := godotenv.Load(); err != nil {
-		panic("Error loading env file content")
-	}
-
 	db := database.InitializeDBConnection()
 	defer db.Close()
 
-	router := src.ConfigureAPI()
-
 	server := &http.Server{
 		Addr:           "localhost:" + os.Getenv("PORT"),
-		Handler:        router,
+		Handler:        src.ConfigureAPI(),
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	// Initializing the server in a goroutine so that
-	// it won't block the graceful shutdown handling below
-	go func() {
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
-		}
-	}()
+	go startServer(server)
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 5 seconds.
@@ -60,4 +46,12 @@ func main() {
 	}
 
 	log.Println("Server exiting")
+}
+
+// Initializing the server in a goroutine so that
+// it won't block the graceful shutdown handling below
+func startServer(server *http.Server) {
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("listen: %s\n", err)
+	}
 }

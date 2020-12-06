@@ -11,10 +11,7 @@ import (
 
 // GetImageList returns list of mapped images
 // based on the query params provided
-func GetImageList(
-	imageListParams *inputs.ImageListQueryingParams,
-	paginator *UserInputs.Paginator,
-) *UserUtils.PaginatedImageResults {
+func GetImageList(imageListParams *inputs.ImageListQueryingParams, paginator *UserInputs.Paginator) *UserUtils.PaginatedImageResults {
 
 	var images []*models.Image
 

@@ -23,11 +23,11 @@ func UploadImage(ctx *gin.Context) {
 	userToken, _ := ctx.Get("user_token")
 	assertedUserToken := userToken.(models.UserToken)
 
-	imageID, fullpath := services.UploadImage(filename, &assertedUserToken.User)
+	imageID, fullFilePath := services.UploadImage(filename, &assertedUserToken.User)
 
-	if err := ctx.SaveUploadedFile(file, fullpath); err != nil {
+	if err := ctx.SaveUploadedFile(file, fullFilePath); err != nil {
 
-		services.RemoveUploadedImageOnScaningError(imageID)
+		services.RemoveUploadedImageOnScanningError(imageID)
 
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

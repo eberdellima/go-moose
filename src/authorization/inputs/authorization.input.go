@@ -1,6 +1,6 @@
 package inputs
 
-// LoginInput structre representing how
+// LoginInput structure representing how
 // payload for login should look like
 type LoginInput struct {
 	Email    string `json:"email" binding:"required"`

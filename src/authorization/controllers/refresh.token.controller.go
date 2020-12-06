@@ -11,7 +11,7 @@ import (
 )
 
 // RefreshToken provides user with a new access token
-// if refresh token is still valid. Otherwise genereates
+// if refresh token is still valid. Otherwise generates
 // a new token pair
 func RefreshToken(ctx *gin.Context) {
 
@@ -24,10 +24,10 @@ func RefreshToken(ctx *gin.Context) {
 		return
 	}
 
-	// Generate only new access token
-	accessToken := services.CreateAccessToken(assertedUserToken.User)
-
-	tokenPair := utils.TokenPair{AccessToken: accessToken, RefreshToken: assertedUserToken.RefreshToken}
+	tokenPair := utils.TokenPair{
+		AccessToken:  services.CreateAccessToken(assertedUserToken.User),
+		RefreshToken: assertedUserToken.RefreshToken,
+	}
 
 	services.UpdateTokenPair(assertedUserToken.User, tokenPair)
 

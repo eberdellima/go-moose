@@ -9,17 +9,11 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/joho/godotenv"
 	uuid "github.com/satori/go.uuid"
 )
 
 // CreateAccessToken create new access token for user
 func CreateAccessToken(user models.User) string {
-
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
 
 	tokenExpTime, err := strconv.Atoi(os.Getenv("ACCESS_TOKEN_EXP_IN_MIN"))
 	if err != nil {
@@ -53,11 +47,6 @@ func CreateRefreshToken() string {
 
 // addTokenPair add new token pair for a user in db
 func addTokenPair(user models.User, tokenPair utils.TokenPair) {
-
-	err := godotenv.Load()
-	if err != nil {
-		panic("Error loading env file content")
-	}
 
 	refreshTokenExpTime, err := strconv.Atoi(os.Getenv("ACCESS_TOKEN_EXP_IN_MIN"))
 	if err != nil {

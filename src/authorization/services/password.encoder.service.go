@@ -76,5 +76,5 @@ func ComparePasswords(password, hash string) (bool, error) {
 	// Generate hashed password
 	comparisonHash := argon2.IDKey([]byte(password), salt, c.time, c.memory, c.threads, c.keyLen)
 
-	return (subtle.ConstantTimeCompare(decodedHash, comparisonHash) == 1), nil
+	return subtle.ConstantTimeCompare(decodedHash, comparisonHash) == 1, nil
 }

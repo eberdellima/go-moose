@@ -65,7 +65,7 @@ func CheckJWT() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		token := ctx.GetHeader("Authorization")
-		token = string(token[7:])
+		token = token[7:]
 
 		// Validate token
 		claims, err := services.ValidateAccessToken(token)

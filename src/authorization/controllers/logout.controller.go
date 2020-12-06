@@ -12,9 +12,8 @@ import (
 func Logout(ctx *gin.Context) {
 
 	token := ctx.GetHeader("Authorization")
-	token = string(token[7:])
 
-	services.Logout(token)
+	services.Logout(token[7:])
 
 	ctx.JSON(http.StatusNoContent, nil)
 }

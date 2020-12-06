@@ -25,7 +25,7 @@ func UploadImage(filename string, user *models.User) (uint, string) {
 
 	uploadPath := generateNewFilename(os.Getenv("UPLOAD_DIR"), filepath.Ext(filename))
 
-	tags := []string{}
+	var tags []string
 	marshalledTags, _ := json.Marshal(tags)
 
 	image := models.Image{
@@ -41,10 +41,10 @@ func UploadImage(filename string, user *models.User) (uint, string) {
 	return image.ID, uploadPath
 }
 
-// RemoveUploadedImageOnScaningError should be called only when
+// RemoveUploadedImageOnScanningError should be called only when
 // image was stored successfully on db but an error didn't allow it to be stored
 // in the filesystem as well
-func RemoveUploadedImageOnScaningError(imageID uint) {
+func RemoveUploadedImageOnScanningError(imageID uint) {
 
 	database.DB.Delete(&models.Image{Model: gorm.Model{ID: imageID}})
 }

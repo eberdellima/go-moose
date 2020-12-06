@@ -48,7 +48,7 @@ func validateOrderImageBy(orderBy string) error {
 		return nil
 	}
 
-	return errors.New("Invalid `order_by` type")
+	return errors.New("invalid `order_by` type")
 }
 
 func mapOrderImageBy(orderBy string) string {
@@ -72,5 +72,5 @@ func validateOrderDir(orderDir string) error {
 		return nil
 	}
 
-	return errors.New("Invalid `order_dir` type")
+	return errors.New("invalid `order_dir` type")
 }

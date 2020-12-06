@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// ProfileInfo structure representing neccessary
+// ProfileInfo structure representing necessary
 // profile data related to user
 type ProfileInfo struct {
 	Email     string    `json:"email"`
@@ -14,7 +14,7 @@ type ProfileInfo struct {
 }
 
 // PaginationResult structure representing data
-// thet will be returned after pagination.
+// that will be returned after pagination.
 // Should always be extended and another field
 // named `Results` should be added to the new structure
 type PaginationResult struct {
@@ -23,7 +23,7 @@ type PaginationResult struct {
 	Size         uint `json:"size"`
 }
 
-// PaginatedImageResults stucture representing
+// PaginatedImageResults structure representing
 // data for paginated list of images
 type PaginatedImageResults struct {
 	PaginationResult
