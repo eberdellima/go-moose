@@ -6,22 +6,25 @@ GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 BINARY_NAME=go-moose
 
+# Compile directory
+COMPILE_DIR=bin
+
 # Scripts
 all: test build
 
 build:
-	$(GOBUILD) -o $(BINARY_NAME) -v
+	$(GOBUILD) -o $(COMPILE_DIR)/$(BINARY_NAME) -v
 
 test:
 	$(GOTEST) -v ./...
 
 clean:
 	$(GOCLEAN)
-	rm -f $(BINARY_NAME)
+	rm -f $(COMPILE_DIR)
 
 run:
-	$(GOBUILD) -o $(BINARY_NAME) -v 
-	./$(BINARY_NAME)
+	$(GOBUILD) -o $(COMPILE_DIR)/$(BINARY_NAME) -v
+	./$(COMPILE_DIR)/$(BINARY_NAME)
 
 compile:
 
