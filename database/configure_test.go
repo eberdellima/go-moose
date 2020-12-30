@@ -1,11 +1,12 @@
 package database
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"sync"
 	"testing"
+
+	"github.com/jinzhu/gorm"
+	"github.com/stretchr/testify/assert"
 )
 
 func setEnvVariablesForTesting(envVariables *DBConfig) {
