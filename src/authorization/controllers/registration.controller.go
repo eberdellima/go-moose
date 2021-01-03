@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"go-moose/database"
-	"go-moose/database/models"
 	"go-moose/src/authorization/inputs"
 	"go-moose/src/authorization/services"
 	"net/http"
@@ -17,18 +15,7 @@ func Register(ctx *gin.Context) {
 	payload, _ := ctx.Get("payload")
 	assertedPayload, _ := payload.(inputs.RegisterInput)
 
-	password, err := services.GeneratePassword(assertedPayload.Password)
-	if err != nil {
-		panic(err)
-	}
-
-	user := models.User{
-		Email:    assertedPayload.Email,
-		Password: password,
-		Username: assertedPayload.Username,
-	}
-
-	database.DB.Create(&user)
+	user := services.RegisterUser(assertedPayload)
 
 	ctx.JSON(http.StatusCreated, services.CreateTokenPair(user))
 }

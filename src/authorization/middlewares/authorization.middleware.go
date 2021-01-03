@@ -46,9 +46,8 @@ func IsUserRegistered() gin.HandlerFunc {
 		payload, _ := ctx.Get("payload")
 		assertedPayload, _ := payload.(inputs.RegisterInput)
 
-		user := models.User{}
-
-		database.DB.Where(models.User{Email: assertedPayload.Email}).Or(models.User{Username: assertedPayload.Username}).First(&user)
+		var user models.User
+		database.DB.Where("email=? OR username=?", assertedPayload.Email, assertedPayload.Username).First(&user)
 
 		if user.ID != 0 {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "User already exists"})
