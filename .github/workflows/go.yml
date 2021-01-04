@@ -19,7 +19,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: test_pass
           MYSQL_DATABASE: test_db
         ports:
-          - 3306
+          - '8888:3306'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     
     steps:
@@ -45,13 +45,13 @@ jobs:
         go build -v ./...
         sudo /etc/init.d/mysql start
         cd .github/workflows
-        mysql -h 127.0.0.1 -u root -ptest_pass < ./schema.sql
+        mysql -h 127.0.0.1 --port 8888 -u root -ptest_pass < ./schema.sql
 
     - name: Test
       run: go test -v ./...
       env:
         DB_ALIAS: test_db
-        DB_PORT: 3306
+        DB_PORT: 8888
         DB_HOST: localhost
         DB_NAME: test_db
         DB_USER: root
