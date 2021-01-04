@@ -31,32 +31,16 @@ jobs:
 
     - name: Build
       run: go build -v ./...
-      env:
-        DB_ALIAS: division5_test
-        DB_PORT: 3306
-        DB_HOST: localhost
-        DB_NAME: division5_test
-        DB_USER: root
-        DB_PASS: Ergi@1aa
-        PORT: 8080
-        GIN_MODE: release     
-        APP_SECRET: catsareawesome
-        BACKEND_URL: http://localhost:8080
-        IMAGE_SERVE_ROUTE: /go_moose
-        ACCESS_TOKEN_EXP_IN_MIN: 20
-        REFRESH_TOKEN_EXP_IN_MIN: 240
-        UPLOAD_DIR: /uploads
-        MAX_MULTIPART_MEMORY_MB: 10
 
     - name: Test
       run: go test -v ./...
       env:
-        DB_ALIAS: division5_test
+        DB_ALIAS: test_db
         DB_PORT: 3306
         DB_HOST: localhost
-        DB_NAME: division5_test
+        DB_NAME: test_db
         DB_USER: root
-        DB_PASS: Ergi@1aa
+        DB_PASS: test_pass
         PORT: 8080
         GIN_MODE: release     
         APP_SECRET: catsareawesome
