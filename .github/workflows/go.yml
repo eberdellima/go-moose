@@ -43,12 +43,13 @@ jobs:
         mysql password: test_pass
 
     - name: Build
-      run: go build -v ./...
+      run: |
+        go build -v ./...
+        cd .github/workflows
+        mysql -u root -ptest_pass < ./schema.sql
 
     - name: Test
-      run: |
-        mysql -u root -ptest_pass < ./schema.sql
-        go test -v ./...
+      run: go test -v ./...
       env:
         DB_ALIAS: test_db
         DB_PORT: 3306
