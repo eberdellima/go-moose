@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-func CreateRegistrationInputs() inputs.RegisterInput {
+// CreateRegistrationInput creates an inputs.RegisterInput object
+// Used for testing purposes only
+func CreateRegistrationInput() inputs.RegisterInput {
 
 	return inputs.RegisterInput{
 		Email:    "sample@" + strconv.Itoa(time.Now().Nanosecond()) + ".com",
@@ -16,6 +18,8 @@ func CreateRegistrationInputs() inputs.RegisterInput {
 	}
 }
 
+// CreateLoginInput creates an inputs.LoginInput object
+// Used for testing purposes only
 func CreateLoginInput(email string, password string) inputs.LoginInput {
 
 	return inputs.LoginInput{
@@ -24,6 +28,8 @@ func CreateLoginInput(email string, password string) inputs.LoginInput {
 	}
 }
 
+// CreateRefreshTokenInput creates an inputs.RefreshTokenInput object
+// Used for testing purposes only
 func CreateRefreshTokenInput(user models.User) inputs.RefreshTokenInput {
 
 	tokenPair := CreateTokenPair(user)

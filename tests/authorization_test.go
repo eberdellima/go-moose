@@ -29,7 +29,7 @@ func TestMain(m *testing.M) {
 
 func TestRegistration(t *testing.T) {
 
-	body, err := utilities.CreateRequestBody(utilities.CreateRegistrationInputs())
+	body, err := utilities.CreateRequestBody(utilities.CreateRegistrationInput())
 
 	if err != nil {
 		t.Fatal(err.Error())

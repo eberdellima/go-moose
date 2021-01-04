@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+// CreateUser generate a models.User object and stores it in the database
+// Used for testing purposes only
 func CreateUser(optPassword string) models.User {
 
 	password := "sample" + strconv.Itoa(time.Now().Nanosecond())
@@ -33,10 +35,15 @@ func CreateUser(optPassword string) models.User {
 	return user
 }
 
+// CreateTokenPair generates a utils.TokenPair object
+// Used for testing purposes only
 func CreateTokenPair(user models.User) utils.TokenPair {
 	return services.CreateTokenPair(user)
 }
 
+// CreateRequestBody takes an interface that will be used
+// for the request body. It will parse it to JSON format
+// and take care of creating the necessary io.Reader
 func CreateRequestBody(args interface{}) (*bytes.Reader, error) {
 
 	if args == nil {

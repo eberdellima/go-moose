@@ -6,6 +6,7 @@ import (
 	"go-moose/src/authorization/inputs"
 )
 
+// RegisterUser creates a new user object and stores it in the database
 func RegisterUser(userInput inputs.RegisterInput) models.User {
 
 	password, err := GeneratePassword(userInput.Password)
