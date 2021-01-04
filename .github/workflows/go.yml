@@ -16,6 +16,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: test_pass
           MYSQL_DATABASE: test_db
         ports:
           - 3306
@@ -44,7 +45,7 @@ jobs:
         go build -v ./...
         sudo /etc/init.d/mysql start
         cd .github/workflows
-        mysql -u root -ptest_pass < ./schema.sql
+        mysql -h 127.0.0.1 -u root -ptest_pass < ./schema.sql
 
     - name: Test
       run: go test -v ./...
