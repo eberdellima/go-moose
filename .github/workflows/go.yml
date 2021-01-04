@@ -45,7 +45,7 @@ jobs:
         go build -v ./...
         sudo /etc/init.d/mysql start
         cd .github/workflows
-        mysql -h 127.0.0.1 --port 8888 -u root -ptest_pass < ./schema.sql
+        mysql -h 127.0.0.1 --port 8888 -u root -ptest_pass test_db < ./schema.sql
 
     - name: Test
       run: go test -v ./...
