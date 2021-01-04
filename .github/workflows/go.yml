@@ -41,6 +41,7 @@ jobs:
         mysql root password: test_pass
         mysql user: 'root'
         mysql password: test_pass
+      run: mysql -u root -ptest_pass < ./schema.sql
 
     - name: Build
       run: go build -v ./...
