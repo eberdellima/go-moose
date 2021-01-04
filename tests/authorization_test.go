@@ -17,7 +17,7 @@ var db *gorm.DB
 
 func TestMain(m *testing.M) {
 
-	utilities.LoadEnv("../.env")
+	//utilities.LoadEnv("../.env")
 
 	db = database.InitializeDBConnection()
 	defer db.Close()
