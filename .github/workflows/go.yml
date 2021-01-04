@@ -41,13 +41,14 @@ jobs:
         mysql root password: test_pass
         mysql user: 'root'
         mysql password: test_pass
-      run: mysql -u root -ptest_pass < ./schema.sql
 
     - name: Build
       run: go build -v ./...
 
     - name: Test
-      run: go test -v ./...
+      run: |
+        mysql -u root -ptest_pass < ./schema.sql
+        go test -v ./...
       env:
         DB_ALIAS: test_db
         DB_PORT: 3306
