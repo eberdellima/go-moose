@@ -20,7 +20,7 @@ func CreateRegistrationInput() inputs.RegisterInput {
 
 // CreateLoginInput creates an inputs.LoginInput object
 // Used for testing purposes only
-func CreateLoginInput(email string, password string) inputs.LoginInput {
+func CreateLoginInput(email, password string) inputs.LoginInput {
 
 	return inputs.LoginInput{
 		Email:    email,

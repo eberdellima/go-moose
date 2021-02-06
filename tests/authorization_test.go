@@ -1,8 +1,6 @@
 package tests
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/stretchr/testify/assert"
 	"go-moose/database"
 	"go-moose/src"
 	"go-moose/tests/utilities"
@@ -10,6 +8,9 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
+
+	"github.com/jinzhu/gorm"
+	"github.com/stretchr/testify/assert"
 )
 
 var server *httptest.Server
@@ -17,14 +18,14 @@ var db *gorm.DB
 
 func TestMain(m *testing.M) {
 
-	//utilities.LoadEnv("../.env")
+	utilities.LoadEnv("../.env")
 
 	db = database.InitializeDBConnection()
 	defer db.Close()
 
 	server = httptest.NewServer(src.ConfigureAPI())
 
-	os.Exit(m.Run())
+	defer os.Exit(m.Run())
 }
 
 func TestRegistration(t *testing.T) {

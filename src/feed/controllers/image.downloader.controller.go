@@ -14,5 +14,4 @@ func DownloadImage(ctx *gin.Context) {
 	assertedImage := image.(models.Image)
 
 	ctx.FileAttachment(assertedImage.UploadPath, assertedImage.OriginalName)
-	return
 }

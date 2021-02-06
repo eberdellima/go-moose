@@ -51,7 +51,7 @@ func RemoveUploadedImageOnScanningError(imageID uint) {
 
 // generateNewFilename creates the new name for the image
 // being uploaded
-func generateNewFilename(uploadDir string, mimetype string) string {
+func generateNewFilename(uploadDir, mimetype string) string {
 
 	newFilename := uuid.NewV4()
 

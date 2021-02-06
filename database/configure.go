@@ -54,6 +54,8 @@ func InitializeDBConnection() *gorm.DB {
 
 	config := getDBConfig()
 
+	fmt.Println(config)
+
 	var err error
 	DB, err = gorm.Open(config.Driver, getConnectionString(config))
 	if err != nil {
