@@ -2,6 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Bhfreagra/go-moose)](https://goreportcard.com/report/github.com/Bhfreagra/go-moose)
 ![Go](https://github.com/Bhfreagra/go-moose/workflows/Go/badge.svg?branch=master)
+[![DeepSource](https://deepsource.io/gh/Bhfreagra/go-moose.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/Bhfreagra/go-moose/?ref=repository-badge)
 
 Go-Moose is a web application for image sharing and discovery.
 For routing I used [Gin](https://gin-gonic.com/), a popular lightweight framework for web development in Go, which is very fast and offers middleware support.
