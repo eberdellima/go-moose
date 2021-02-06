@@ -25,7 +25,9 @@ func TestMain(m *testing.M) {
 
 	server = httptest.NewServer(src.ConfigureAPI())
 
-	defer os.Exit(m.Run())
+	exitCode := m.Run()
+
+	defer os.Exit(exitCode)
 }
 
 func TestRegistration(t *testing.T) {
